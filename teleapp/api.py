@@ -12,10 +12,11 @@ def new_bot(token):
   try:
     telebot = current_app.config.get('TELEBOT')
     tb = telebot(token)
-    tb.create()
+    tb.start()
     return jsonify({
       "name": tb.username,
       "id": tb.id
     })
   except Exception as e:
+    tb.stop()
     return jsonify({"error": f"{e}"})

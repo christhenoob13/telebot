@@ -1,8 +1,7 @@
-#from bembang import log
 import importlib
 import os
 
-def load_bot_commands(bot_instance):
+def load_commands(bot_instance):
   loaded = 0
   unloaded = 0
   files=list(filter(lambda file: file.endswith('.py') and file!='__init__.py',os.listdir('./script/commands')))
@@ -13,16 +12,12 @@ def load_bot_commands(bot_instance):
     if config:
       name = config.get('name').lower()
       function = config.get('run')
-      # check if valid command name or function
       if not name or not function:
         unloaded+=1
-        #log('error', 'Invalid config items')
       elif not name.isalnum():
         unloaded+=1
-        #log('error', 'Invalid command name')
       elif name in bot_instance.commands:
         unloaded+=1
-        #log('error', f"Command '{name}' already exist")
       else:
         loaded+=1
         config['usage'] = config.get('usage', '').replace('{p}', bot_instance.prefix)
@@ -30,6 +25,9 @@ def load_bot_commands(bot_instance):
         bot_instance.commands[name] = config
     else:
       unloaded+=1
-      #log('error', f'Missing config in {file}')
-  log('success', f'COMMAND: \033[1;92m{loaded}\033[0m', label='LOAD')
-  log('error', f'COMMAND: \033[1;91m{unloaded}\033[0m', label='UNLOAD')
+  
+  message = f"NAME: [blue]{bot_instance.username}[/blue]\n"
+  message += f"COMMAND LOADED: [green]{loaded}[/green]\n"
+  message += f"COMMAND UNLOAD: [red]{unloaded}[/red]"
+  panel = bot_instance.rich.Panel(message, title="BOT CREATED")
+  bot_instance.rich.console.print(panel)
