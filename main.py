@@ -60,8 +60,6 @@ class BotDaddy(Margelet):
     self.stop_bot()
 
 if __name__ == '__main__':
-  toper = BotDaddy("7218544319:AAFI-ZCSjLPRh1tmNCIIpqAszp_ykG0yVGw")
-  toper.start()
   
   app = web_server(BotDaddy)
   app.run()
