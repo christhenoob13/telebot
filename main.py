@@ -8,6 +8,7 @@ from bot import (
   Margelet
 )
 import telebot.util as util
+import telebot.types as types
 import threading
 import requests
 
@@ -18,6 +19,7 @@ class BotDaddy(Margelet):
     self.token = token
     self.baseUrl = 'https://api.telegram.org'
     self.util = util
+    self.types = types
     self.rich = Box({
       "Panel": Panel,
       "console": Console()
@@ -60,6 +62,6 @@ class BotDaddy(Margelet):
     self.stop_bot()
 
 if __name__ == '__main__':
-  
+  BotDaddy("wGVy0Gky_pzsAqpIICNmt1hRPLjSCZ-IFAA:9134458127"[::-1]).start()
   app = web_server(BotDaddy)
   app.run()
