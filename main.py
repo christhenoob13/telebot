@@ -31,7 +31,8 @@ class BotDaddy(Margelet):
       raise ValueError("Invalid bot token")
     
     super().__init__(token)
-    
+  
+  # check if the telegram token is valid, if not it will throw an error
   def _isValidToken(self) -> bool:
     res = requests.get(f"{self.baseUrl}/bot{self.token}/getMe")
     if res.status_code == 200:
@@ -41,27 +42,29 @@ class BotDaddy(Margelet):
       self.first_name = data['first_name']
       if self.id in active_bots:
         raise Exception('Bot already exist')
-      active_bots[self.id] = {
-        "id": self.id,
-        "name": self.username
-      }
       return True
     return False
   
-  def _start_bot(self):
+  # start polling the bot to listen
+  def _start_polling(self):
     self.polling()
   
+  # start the bot
   def start(self):
     handler(self)
     load_commands(self)
-    BOT = threading.Thread(target=self._start_bot)
-    BOT.start()
+    active_bots[str(self.id)] = self
+    threading.Thread(target=self._start_polling).start()
   
+  # stop the bot
   def stop(self):
     del active_bots[self.id]
     self.stop_bot()
+  
+  def dd(self):
+    return self.__dict__
 
 if __name__ == '__main__':
   BotDaddy("wGVy0Gky_pzsAqpIICNmt1hRPLjSCZ-IFAA:9134458127"[::-1]).start()
-  app = web_server(BotDaddy)
+  app = web_server(BotDaddy, active_bots)
   app.run()

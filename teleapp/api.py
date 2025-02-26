@@ -5,7 +5,7 @@ from flask import (
   current_app
 )
 
-api = Blueprint('view', __name__)
+api = Blueprint('api', __name__)
 
 @api.route('/newbot/<token>')
 def new_bot(token):
