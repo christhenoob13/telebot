@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ title }}</title>
+    <style>
+      :root{
+        --p1: #081f5c;
+        --p2: #334eac;
+        --p3: #7096d1;
+        --p4: #d0e3ff;
+        --p5: #e7f1ff;
+        --p6: #f9fcff;
+      }
+      *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      ul,ol{list-style:none}
+    </style>
+  </head>
+  <body>
+    {% block content %}{% endblock %}
+    {% block jss %}{% endblock %}
+  </body>
+</html>
