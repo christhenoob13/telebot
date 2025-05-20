@@ -15,31 +15,25 @@ def load_commands():
       function = config.get('run')
       permission = config.get('permission', 'member')
       config['permission'] = permission
+      if permission not in ['member','admin','owner',0,1,2]:
+        config['permission'] = 'member'
       if not name or not function:
-        print("\033[31mCOMMAND NOT LOADED \033[0m- there is no 'name' & 'run' key on config")
+        print("\033[31mCOMMAND NOT LOADED \033[0m- Invalid 'name' & 'run' key on config")
       elif not name.isalnum():
         print(f"\033[31mCOMMAND NOT LOADED \033[0m- Invalid command name. name: {name}")
       elif name in tambak:
-        print(f"\033[31mCOMMAND NOT LOADED \033[0m- Invalid command name. name: {name}")
-      elif permission not in ['member','admin','owner',0,1,2]:
-        unloaded+=1
-        config['permission'] = 'member'
+        print(f"\033[31mCOMMAND NOT LOADED \033[0m- command '{name}' already exists")
       else:
-        loaded+=1
-        config['usage'] = config.get('usage', '').replace('{p}', bot_instance.prefix)
-        config['description'] = config.get('description', 'No description.').replace('{p}', bot_instance.prefix)
-        bot_instance.commands[name] = config
+        config['usage'] = config.get('usage', 'No usage.')
+        config['description'] = config.get('description', 'No description.')
+        tambak[name] = config
+        print(f"\033[32mCOMMAND LOADED \033[0m- {name} \033[33m({file}.py)\033[0m")
     else:
-      unloaded+=1
-  
-  message = f"NAME: [blue]{bot_instance.username}[/blue]\n"
-  message += f"COMMAND LOADED: [green]{loaded}[/green]\n"
-  message += f"COMMAND UNLOAD: [red]{unloaded}[/red]\n"
-  return message
+      print(f"\033[31mCOMMAND NOT LOADED \033[0m- Unable to load command at {file}.py")
+  return tambak
 
-def load_events(bot):
-  load = 0
-  unload = 0
+def load_events():
+  tambak = dict()
   files=list(filter(lambda file: file.endswith('.py') and file!='__init__.py',os.listdir('./script/events')))
   for file in files:
     filepath = f'script.events.{os.path.splitext(file)[0]}'
@@ -52,16 +46,14 @@ def load_events(bot):
       author = config.get('author', 'Unknown')
       description = config.get('description', 'No description!')
       if not name or not type or not run:
-        unload += 1
+        print("\033[31mEVENT NOT LOADED \033[0m- Invalid 'name' & 'run' key on config")
       elif not name.isalnum():
-        unload += 1
-      elif name in bot.events:
-        unload += 1
+        print("\033[31mEVENT NOT LOADED \033[0m- Invalid event name")
+      elif name in tambak:
+        print(f"\033[31mEVENT NOT LOADED \033[0m- Event name ({name}) already exists")
       else:
-        load += 1
-        bot.events[name] = config
+        tambak[name] = config
+        print(f"\033[32mEVENT LOADED \033[0m- {name} \033[33m({file}.py)\033[0m")
     else:
-      unload += 1
-  message = f"EVENT LOADED: [green]{load}[/green]\n"
-  message += f"EVENT LOADED: [red]{unload}[/red]"
-  return message
+      print(f"\033[31mEVENT NOT LOADED \033[0m- Unable to load event at {file}.py")
+  return tambak

@@ -1,12 +1,11 @@
 def function(bot, event):
   try:
     new_members = [user.username for user in event.new_chat_members]
-    bot_info = bot.get_me()
-    if bot_info.username in new_members:
-      chatMember = bot.get_chat_member(event.chat.id, bot_info.id)
+    if bot.username in new_members:
+      chatMember = bot.get_chat_member(event.chat.id, bot.id)
       if chatMember.status != 'administrator':
         bot.send_message(event.chat.id,
-          f"🎉 <b>{bot_info.first_name}</b> has been successfully connected!\n\n" +
+          f"🎉 <b>{bot.first_name}</b> has been successfully connected!\n\n" +
           f"Thank you for inviting me to <b>{event.chat.title}</b>. To unlock my full range of features, " +
           "please consider granting me admin privileges.",
           parse_mode='HTML'

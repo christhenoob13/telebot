@@ -1,0 +1,5 @@
+Flask
+pyTelegramBotAPI
+rich
+python-box
+requests
