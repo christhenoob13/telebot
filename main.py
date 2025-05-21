@@ -71,11 +71,13 @@ class BotDaddy(Margelet):
   
   # start the bot
   def start(self):
-    self.set_my_description(self.description)
-    handler(self)
-    active_bots[str(self.id)] = self
-    threading.Thread(target=self._start_polling).start()
-  
+    try:
+      self.set_my_description(self.description)
+      handler(self)
+      active_bots[str(self.id)] = self
+      threading.Thread(target=self._start_polling).start()
+    except Exception as e:
+      print("ERROR:start:- ", e)
   # stop the bot
   def stop(self):
     del active_bots[self.id]
@@ -88,8 +90,8 @@ if __name__ == '__main__':
   BotDaddy(
     "7041468622:AAEvpBtCKt_wLOSIFWboeoo4tyBTErLKlIw",
     ["*"],["*"],
-    [7075537944],
-    prefix='+'
+    [707553794],
+    prefix='/'
   ).start()
   app = web_server(BotDaddy, active_bots)
   app.run()

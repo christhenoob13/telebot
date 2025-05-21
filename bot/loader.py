@@ -15,7 +15,7 @@ def load_commands():
       function = config.get('run')
       permission = config.get('permission', 'member')
       config['permission'] = permission
-      if permission not in ['member','admin','owner',0,1,2]:
+      if permission not in ['member','admin','botadmin',0,1,2]:
         config['permission'] = 'member'
       if not name or not function:
         print("\033[31mCOMMAND NOT LOADED \033[0m- Invalid 'name' & 'run' key on config")
