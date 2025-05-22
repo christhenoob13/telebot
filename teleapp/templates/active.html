@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% include 'component/header.html' %}
+
+<ul>
+  {% for bot in data %}
+    <li>
+      <b>Name: </b>{{ bot.name }}<br>
+      <b>Id: </b>{{ bot.id }}
+    </li>
+  {% endfor %}
+</ul>
+
+{% endblock %}

@@ -1,0 +1,44 @@
+<nav class="navbar navbar-dark bg-dark border-2 border-bottom">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#" style="color: var(--p3)">TELEBOT</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mynavbar">
+      <ul class="navbar-nav">
+        <li class="nav-item" id='telebot'>
+          <a class="nav-link" href="/"><i class="fa-regular fa-star"></i>&nbsp; Telebot</a>
+        </li>
+        <li class="nav-item" id='active'>
+          <a class="nav-link" href="/active"><i class="fa-solid fa-robot"></i>&nbsp; Active</a>
+        </li>
+        <li class="nav-item" id="botcontrol">
+          <a class="nav-link" href="/bot/login"><i class="fa-solid fa-gear"></i>&nbsp; Bot Control</a>
+        </li>
+        <li class="nav-item" id="developer">
+          <a class="nav-link" href="/developer"><i class="fa-solid fa-code"></i>&nbsp; Developer</a>
+        </li>
+      </ul>
+      {% if not bot_access %}
+      <p class="h6 border-top pt-2" style="color: var(--p4)">Bot Control</p>
+      <div class="list-group">
+        <a class="list-group-item list-group-item-action" href="#">Chats</a>
+        <a class="list-group-item list-group-item-action" href="#">Change profile</a>
+        <a class="list-group-item list-group-item-action" href="#">Change description</a>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</nav>
+<script>
+  const id = "{{ aid }}"
+  const li = document.getElementById(id);
+  const a = li.querySelector('a');
+  a.removeAttribute('href')
+  a.classList.add('text-secondary')
+  document.querySelector("nav > a.nav-link").forEach((item) => {
+    if (!item.classList.contains('text-secondary') && item.id === id) {
+      item.classList.remove('text-secondary')
+    }
+  })
+</script>

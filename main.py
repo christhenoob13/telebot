@@ -87,11 +87,11 @@ class BotDaddy(Margelet):
     return self.__dict__
 
 if __name__ == '__main__':
-  BotDaddy(
-    "7041468622:AAEvpBtCKt_wLOSIFWboeoo4tyBTErLKlIw",
-    ["*"],["*"],
-    [707553794],
-    prefix='/'
-  ).start()
+#  BotDaddy(
+#    "7041468622:AAEvpBtCKt_wLOSIFWboeoo4tyBTErLKlIw",
+#    ["*"],["*"],
+#    [7075537944],
+#    prefix='/'
+#  ).start()
   app = web_server(BotDaddy, active_bots)
-  app.run()
+  app.run(debug=True)
