@@ -1,12 +1,15 @@
 function Alert(status, message){
-  const div = document.getElementById('respo-message');
-  div.className = className === 'error' ?
+  const parent = document.getElementById('respo-message');
+  const div = document.createElement('div');
+  div.className = status === 'error' ?
     `alert alert-danger alert-dismissible` :
     `alert alert-success alert-dismissible`;
   div.innerHTML = `<button type="button" class="btn-close" data-bs-dismiss="alert"></button>${message}`
+  parent.innerHTML = "";
+  parent.appendChild(div)
 }
 
-async const create_bot = () => {
+const create_bot = async () => {
   const token = document.getElementById('token');
   const botadmin = document.getElementById('botadmin');
   const prefix = document.getElementById('prefix');
