@@ -2,13 +2,20 @@
   
   <div class="my-3">
     <label for="token"><b>Token</b></label>
-    <textarea id="token" placeholder="1234567890:AAEvpBtCKt...." class="w-100 p-2 mt-1 rounded-2 border bg-dark focus-ring" rows="3" style="resize: none"></textarea>
+    <textarea id="token" placeholder="1234567890:AAEvpBtCKt...." class="form-control w-100 p-2 mt-1" rows="3" style="resize: none"></textarea>
   </div>
   
-  <div class="mb-4">
-    <label for="admin"><b>Admin ID</b></label>
-    <input type="number" id="admin" placeholder="1234567890" class="w-100 p-2 mt-1 rounded-2 border focus-ring bg-dark">
+  <div class="mb-4 d-flex gap-3">
+    <div class="flex-fill">
+      <label for="admin" class="form-label"><b>Admin ID</b></label>
+      <input type="number" id="admin" placeholder="1234567890" class="form-control">
+    </div>
+    <div class="flex-fill">
+      <label for="prefix" class="form-label"><b>Prefix</b></label>
+      <input type="text" id="prefix" placeholder="/" class="form-control">
+    </div>
   </div>
+
   
   <div class="mb-3">
     <b>Commands</b>
