@@ -1,17 +1,16 @@
 function Alert(status, message){
-  const parent = document.getElementById('respo-message');
-  const div = document.createElement('div');
-  div.className = status === 'error' ?
-    `alert alert-danger alert-dismissible` :
-    `alert alert-success alert-dismissible`;
-  div.innerHTML = `<button type="button" class="btn-close" data-bs-dismiss="alert"></button>${message}`
-  parent.innerHTML = "";
-  parent.appendChild(div)
+  Swal.fire({
+    position: 'center',
+    icon: status,
+    html: message,
+    showConfirmButton: false,
+    timer: 1500
+  });
 }
 
 const create_bot = async () => {
   const token = document.getElementById('token');
-  const botadmin = document.getElementById('botadmin');
+  const admin = document.getElementById('admin');
   const prefix = document.getElementById('prefix');
   const commands = [...document.querySelectorAll('.commands')]
     .filter(cmd => cmd.checked)
@@ -20,7 +19,9 @@ const create_bot = async () => {
     .filter(ev => ev.checked)
     .map((ev) => ev.value);
   
-  if (!token.value) return Alert("error", "Invalid bot token value");
+  if (!token.value) return Alert("error", "Missing bot token value");
+  if (!admin.value) return Alert("error", "Missing AdminID value");
+  if (commands.length < 1) return Alert("error", "Please select a commands at least one")
   
   try{
     const response = await fetch(`/api/create-bot`, {
@@ -30,7 +31,7 @@ const create_bot = async () => {
       },
       body: JSON.stringify({
         token: token.value,
-        botadmin: botadmin.value,
+        admin: admin.value,
         prefix: prefix.value,
         commands: commands,
         events: events

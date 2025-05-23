@@ -15,5 +15,5 @@ config = dict(
   name = "bible",
   run = function,
   author = "astro",
-  permission = "admin"
+  permission = "member"
 )

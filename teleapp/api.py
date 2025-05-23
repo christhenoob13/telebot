@@ -27,7 +27,7 @@ def create_bot():
   try:
     data = request.get_json()
     token = data.get('token')
-    botadmin = data.get('botadmin')
+    botadmin = data.get('admin')
     prefix = data.get('prefix')
     commands = data.get('commands')
     events = data.get('events')
@@ -55,8 +55,7 @@ def create_bot():
       "id": tb.id
     }), 200
   except Exception as e:
-    tb.stop()
+    print(e)
     return jsonify({"error": str(e)}), 1502
   except ValueError as ve:
-    tb.stop()
     return jsonify({"error": str(ve)}), 1502
