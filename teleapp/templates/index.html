@@ -1,5 +1,21 @@
 {% extends 'base.html' %}
-{% block jss %}{% endblock %}
+{% block jss %}
+<style>
+.perm-botadmin{
+  border: 1px solid #7e13d3;
+  color: #7e13d3;
+}
+.perm-admin{
+  border: 1px solid #c1a816;
+  color: #c1a816;
+}
+.perm-member{
+  border: 1px solid #2682bf;
+  color: #2682bf;
+}
+</style>
+<script src="{{ url_for('static', filename='js/create.js') }}"></script>
+{% endblock %}
 {% block content %}
 
 {% include 'component/header.html' %}

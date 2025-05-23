@@ -24,7 +24,6 @@ class BotDaddy(Margelet):
     commands: list,
     events: list,
     admins: list,
-    description: None|str = None,
     prefix: str|None = None
     ):
     self.token = token
@@ -37,7 +36,6 @@ class BotDaddy(Margelet):
       "console": Console()
     })
     
-    self.description = description
     self.prefix = prefix if prefix else ''
     self.admins = admins
     self.commands = {cmd: COMMANDS[cmd] for cmd in commands} if commands[0]!="*" and len(commands)==1 else COMMANDS
@@ -57,11 +55,11 @@ class BotDaddy(Margelet):
     res = requests.get(f"{self.baseUrl}/bot{self.token}/getMe")
     if res.status_code == 200:
       data = res.json()['result']
+      if self.id in active_bots:
+        raise Exception('Bot already exist')
       self.username = data['username']
       self.id = data['id']
       self.first_name = data['first_name']
-      if self.id in active_bots:
-        raise Exception('Bot already exist')
       return True
     return False
   
@@ -72,12 +70,11 @@ class BotDaddy(Margelet):
   # start the bot
   def start(self):
     try:
-      self.set_my_description(self.description)
       handler(self)
       active_bots[str(self.id)] = self
       threading.Thread(target=self._start_polling).start()
     except Exception as e:
-      print("ERROR:start:- ", e)
+      raise Exception(e)
   # stop the bot
   def stop(self):
     del active_bots[self.id]
@@ -93,5 +90,18 @@ if __name__ == '__main__':
 #    [7075537944],
 #    prefix='/'
 #  ).start()
-  app = web_server(BotDaddy, active_bots)
+  command_form, event_form = COMMANDS, EVENTS
+  for cmd in command_form:
+    del command_form[cmd]['run']
+  for ev in event_form:
+    del event_form[ev]['run']
+    del event_form[ev]['type']
+  app = web_server(
+    BotDaddy,
+    active_bots,
+    dict(
+      commands=command_form,
+      events=event_form
+    )
+  )
   app.run(debug=True)

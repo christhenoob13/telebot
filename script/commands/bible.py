@@ -14,5 +14,6 @@ def function(bot, data):
 config = dict(
   name = "bible",
   run = function,
-  author = "astro"
+  author = "astro",
+  permission = "admin"
 )

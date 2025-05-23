@@ -10,7 +10,14 @@ view = Blueprint('view', __name__)
 
 @view.route('/')
 def root():
-  return render_template('index.html', title='Telebot', aid='telebot'), 200
+  commands = current_app.config['COMMANDS']
+  events = current_app.config['EVENTS']
+  return render_template('index.html',
+    title='Telebot',
+    aid='telebot',
+    commands=commands,
+    events=events
+  ), 200
 
 @view.route('/active')
 def online():

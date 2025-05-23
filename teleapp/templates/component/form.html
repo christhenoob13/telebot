@@ -1,10 +1,52 @@
-<form class="container mt-2 border py-2 px-3 rounded-2">
+<div class="container mt-2 border border-2 py-2 px-3 rounded-4">
+  
   <div class="my-3">
     <label for="token"><b>Token</b></label>
-    <textarea name="token" id="token" placeholder="1234567890:AAEvpBtCKt...." class="w-100 p-2 rounded-2" rows="3"></textarea>
+    <textarea id="token" placeholder="1234567890:AAEvpBtCKt...." class="w-100 p-2 mt-1 rounded-2 border bg-dark focus-ring" rows="3" style="resize: none"></textarea>
   </div>
+  
+  <div class="mb-4">
+    <label for="admin"><b>Admin ID</b></label>
+    <input type="number" id="admin" placeholder="1234567890" class="w-100 p-2 mt-1 rounded-2 border focus-ring bg-dark">
+  </div>
+  
   <div class="mb-3">
-    <label for="owner"><b>Owner ID</b></label>
-    <input name="owner" id="owner" placeholder="1234567890" class="w-100 p-2 border-1">
+    <b>Commands</b>
+    <ul class="list-group mt-1">
+      <li class="list-group-item list-group-item-light d-flex justify-content-between align-items-center">
+        <b>Name</b>
+        <b>Permission</b>
+      </li>
+      {% for n in commands %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div class="form-check">
+          <input class="form-check-input commands" type="checkbox" id="{{ n }}" value="{{ n }}">
+          <label class="form-check-label">{{ n }}</label>
+        </div>
+        <span class="badge rounded-pill perm-{{ commands[n].permission }}">{{ commands[n].permission }}</span>
+      </li>
+      {% endfor %}
+    </ul>
   </div>
-</form>
+  
+  <div class="mb-4 mt-4">
+    <b>Events</b>
+    <ul class="list-group mt-1">
+      {% for n in events %}
+      <li class="list-group-item">
+        <div class="form-check">
+          <input class="form-check-input events" type="checkbox" id="{{ n }}" value="{{ n }}">
+          <label class="form-check-label">{{ n }}</label>
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  
+  <div id="respo-message"></div>
+  
+  <div class="mb-2">
+    <button class="btn btn-primary w-100" onclick="create_bot()">Create Bot</button>
+  </div>
+  
+</div>
